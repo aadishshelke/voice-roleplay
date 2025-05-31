@@ -140,3 +140,56 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+# Voice Roleplay Application
+
+A voice-based roleplay application for practicing sales conversations.
+
+## Setup
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   # Backend
+   cd backend
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   pip install -r requirements.txt
+
+   # Frontend
+   cd ..
+   npm install
+   ```
+
+3. Set up environment variables:
+   Create a `.env` file in the `backend` directory with the following variables:
+   ```
+   HUGGINGFACE_TOKEN=your_huggingface_token_here
+   GOOGLE_API_KEY=your_google_api_key_here
+   ```
+
+4. Start the servers:
+   ```bash
+   # Backend (in backend directory)
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   python main.py
+
+   # Frontend (in root directory)
+   npm run dev
+   ```
+
+The application will be available at:
+- Frontend: http://localhost:8080
+- Backend: http://localhost:8000
+
+## Features
+
+- Voice-based roleplay scenarios
+- Real-time feedback on communication skills
+- Emotion and sentiment analysis
+- Audio feature analysis
+- Integration with Gemini AI for advanced feedback
+
+## Requirements
+
+All required Python packages are listed in `backend/requirements.txt` with their exact versions for reproducibility.
