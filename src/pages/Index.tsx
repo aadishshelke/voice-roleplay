@@ -50,7 +50,11 @@ const Index: React.FC = () => {
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-gray-900">GroMo</h1>
+            <img 
+              src="/GromoLogo.f6c2f6dc.png" 
+              alt="GroMo Logo" 
+              className="h-8 w-auto"
+            />
             <div className="flex gap-4">
               <Button variant="outline">Sign In</Button>
               <Button>Sign Up</Button>
@@ -123,7 +127,7 @@ const Index: React.FC = () => {
                 <p className="text-sm text-gray-600">Reward: 200 XP + Special Badge</p>
               </div>
             </Card>
-          </div>
+        </div>
 
           {/* Middle Column */}
           <div className="space-y-6">
@@ -133,7 +137,7 @@ const Index: React.FC = () => {
               <div className="space-y-4">
                 <p className="text-gray-800">Test your knowledge of sales techniques</p>
                 <Button className="w-full">Start Quiz</Button>
-              </div>
+        </div>
             </Card>
 
             {/* Role-Play Practice */}
@@ -144,7 +148,7 @@ const Index: React.FC = () => {
                 <Link to="/roleplay-practice">
                   <Button className="w-full">Start Practice</Button>
                 </Link>
-              </div>
+        </div>
             </Card>
 
             {/* Level & XP */}
@@ -161,7 +165,7 @@ const Index: React.FC = () => {
                 <p className="text-sm text-gray-600">50 XP to next level</p>
               </div>
             </Card>
-          </div>
+        </div>
 
           {/* Right Column */}
           <div className="space-y-6">
