@@ -94,10 +94,16 @@ const RoleplayPractice: React.FC = () => {
 
     try {
       console.log('Sending request to backend...');
-      const customerResponse = await axios.post('http://localhost:8000/api/generate-customer-response', {
+      const customerResponse = await axios.post('/api/generate-customer-response', {
         scenario,
         agentMessage: userInput,
         model: MODEL_NAME
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        timeout: 120000 // 2 minute timeout
       });
 
       console.log('Received customer response:', customerResponse.data);
@@ -105,10 +111,16 @@ const RoleplayPractice: React.FC = () => {
       const customerMessage: Message = { role: 'customer', content: responseText };
 
       console.log('Sending feedback request...');
-      const feedbackRes = await axios.post('http://localhost:8000/api/generate-feedback', {
+      const feedbackRes = await axios.post('/api/generate-feedback', {
         customerMessage: getLatestCustomerMessage(updatedMessages),
         agentMessage: userInput,
         model: MODEL_NAME
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        timeout: 120000 // 2 minute timeout
       });
 
       console.log('Received feedback:', feedbackRes.data);
@@ -118,9 +130,27 @@ const RoleplayPractice: React.FC = () => {
       console.error('Error details:', err);
       if (axios.isAxiosError(err)) {
         if (err.code === 'ERR_NETWORK') {
-          alert('Unable to connect to the server. Please make sure the backend server is running.');
+          alert('Unable to connect to the server. Please make sure the backend server is running at http://localhost:8000');
+        } else if (err.code === 'ECONNABORTED') {
+          alert('Request timed out. The server took too long to respond. Please try again.');
         } else if (err.response) {
-          alert(`Server error: ${err.response.data.detail || 'Unknown error'}`);
+          // Handle different HTTP status codes
+          switch (err.response.status) {
+            case 400:
+              alert(`Invalid request: ${err.response.data.detail || 'Please check your input'}`);
+              break;
+            case 404:
+              alert('API endpoint not found. Please check the server configuration.');
+              break;
+            case 500:
+              alert(`Server error: ${err.response.data.detail || 'An unexpected error occurred on the server'}`);
+              break;
+            case 504:
+              alert('Server timeout. The request took too long to process.');
+              break;
+            default:
+              alert(`Error ${err.response.status}: ${err.response.data.detail || 'An error occurred'}`);
+          }
         } else {
           alert(`Error: ${err.message}`);
         }
